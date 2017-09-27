@@ -1,7 +1,18 @@
 variable "namespace" {}
 
-variable "instances" {
-  description = "The number of nomad servers."
+variable "min_instances" {
+  description = "Minimum number of servers."
+}
+
+variable "max_instances" {
+  description = "Maximum number of nomad servers."
+}
+
+# ALB Settings
+variable "target_groups" {
+  description = "List of target groups to attach to autoscaling group"
+  type        = "list"
+  default     = []
 }
 
 # AWS Specific variables
@@ -20,19 +31,6 @@ variable "subnets" {
 
 variable "vpc_id" {
   description = "The id of the VPC which the servers are attached to"
-}
-
-variable "internal_alb_arn" {
-  description = "The arn of the internal alb"
-}
-
-variable "external_alb_arn" {
-  description = "The arn of the external alb"
-}
-
-variable "load_balancers" {
-  description = "The arn of the external alb"
-  type        = "list"
 }
 
 variable "security_group" {
@@ -61,6 +59,11 @@ variable "consul_join_tag_value" {
 }
 
 # Nomad configuration
+variable "nomad_datacentre" {
+  description = "Default datacenter for Nomad"
+  default     = "dc1"
+}
+
 variable "nomad_enabled" {
   description = "Is nomad enabled on this instance"
 }

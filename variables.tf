@@ -1,31 +1,57 @@
 # Generic
-variable "public_key_path" {
-  description = "The absolute path on disk to the SSH public key."
-}
-
 variable "instance_type" {
   default = "t2.micro"
 }
 
 variable "namespace" {
-  description = <<EOH
-The namespace to create the virtual training lab. This should describe the
-training and must be unique to all current trainings. IAM users, workstations,
-and resources will be scoped under this namespace.
-
-It is best if you add this to your .tfvars file so you do not need to type
-it manually with each run
-EOH
+  description = "Namespace for application, all resources will be prefixed with namespace"
 }
 
-variable "vpc_cidr_block" {
-  description = "The top-level CIDR block for the VPC."
-  default     = "10.1.0.0/16"
+variable "min_servers" {
+  description = "The minimum number of servers to add to the autoscale group"
 }
 
-variable "cidr_blocks" {
-  description = "The CIDR blocks to create the workstations in."
-  default     = ["10.1.1.0/24", "10.1.2.0/24"]
+variable "max_servers" {
+  description = "The maximum number of servers allowed in the autoscale group"
+}
+
+variable "min_agents" {
+  description = "The minimum number of agents to add to the autoscale group"
+}
+
+variable "max_agents" {
+  description = "The maximum number of agents allowed in the autoscale group"
+}
+
+# Networking
+variable "subnets" {
+  description = "Subnets to launch instances in"
+  type        = "list"
+}
+
+variable "vpc_id" {
+  description = "ID of the vpc to attach instances to"
+}
+
+variable "key_name" {
+  description = "SSH key to add to instances"
+}
+
+variable "security_group" {
+  description = "ID of security group to attach to instances"
+}
+
+# ALB Settings
+variable "server_target_groups" {
+  description = "List of target groups to attach to autoscaling group"
+  type        = "list"
+  default     = []
+}
+
+variable "client_target_groups" {
+  description = "List of target groups to attach to autoscaling group"
+  type        = "list"
+  default     = []
 }
 
 # Consul settings
@@ -41,21 +67,18 @@ variable "consul_join_tag_value" {
   description = "Value to search for in auto-join tag to use for consul auto-join"
 }
 
-variable "nomad_servers" {
-  description = "The number of nomad servers."
-}
-
 variable "consul_enabled" {
   description = "Is consul enabled on this instance"
 }
 
 # Nomad settings
-variable "nomad_enabled" {
-  description = "Is nomad enabled on this instance"
+variable "nomad_datacentre" {
+  description = "Default datacenter for Nomad"
+  default     = "dc1"
 }
 
-variable "nomad_agents" {
-  description = "The number of nomad agents"
+variable "nomad_enabled" {
+  description = "Is nomad enabled on this instance"
 }
 
 variable "nomad_version" {

@@ -3,7 +3,7 @@ data "template_file" "config_consul" {
   template = "${file("${path.module}/templates/consul-${var.consul_type}.json.tpl")}"
 
   vars {
-    instances             = "${var.instances}"
+    instances             = "${var.min_instances}"
     consul_join_tag_key   = "${var.consul_join_tag_key}"
     consul_join_tag_value = "${var.consul_join_tag_value}"
   }
@@ -13,7 +13,8 @@ data "template_file" "config_nomad" {
   template = "${file("${path.module}/templates/nomad-${var.nomad_type}.hcl.tpl")}"
 
   vars {
-    instances = "${var.instances}"
+    datacenter = "${var.nomad_datacentre}"
+    instances  = "${var.min_instances}"
   }
 }
 
@@ -37,6 +38,7 @@ data "template_file" "startup" {
 }
 
 resource "aws_launch_configuration" "default" {
+  name          = "${var.namespace}.${var.nomad_type}"
   image_id      = "${data.aws_ami.ubuntu-1604.id}"
   instance_type = "${var.instance_type}"
   key_name      = "${var.key_name}"
@@ -49,19 +51,13 @@ resource "aws_launch_configuration" "default" {
 
 resource "aws_autoscaling_group" "default" {
   name     = "${var.namespace}"
-  max_size = 5
-  min_size = "${var.instances}"
+  max_size = "${var.max_instances}"
+  min_size = "${var.min_instances}"
 
   launch_configuration = "${aws_launch_configuration.default.name}"
   vpc_zone_identifier  = ["${var.subnets}"]
 
-  load_balancers = ["${var.load_balancers}"]
-
-  target_group_arns = ["${concat(
-    aws_alb_target_group.nomad.*.arn,
-    aws_alb_target_group.consul.*.arn,
-    aws_alb_target_group.ui.*.arn,
-    aws_alb_target_group.fabio.*.arn)}"]
+  target_group_arns = ["${var.target_groups}"]
 
   tag = {
     key                 = "Name"
