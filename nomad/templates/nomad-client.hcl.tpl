@@ -1,4 +1,4 @@
-datacenter = "{datacenter}"
+datacenter = "${datacenter}"
 region = "aws"
 data_dir   = "/mnt/nomad"
 
