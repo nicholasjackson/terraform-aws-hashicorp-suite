@@ -77,6 +77,11 @@ variable "nomad_datacentre" {
   default     = "dc1"
 }
 
+variable "nomad_region" {
+  description = "Default datacenter for Nomad"
+  default     = "aws"
+}
+
 variable "nomad_enabled" {
   description = "Is nomad enabled on this instance"
 }
