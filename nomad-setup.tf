@@ -4,6 +4,7 @@ module "servers" {
   namespace     = "${var.namespace}-server"
   min_instances = "${var.min_servers}"
   max_instances = "${var.max_servers}"
+  instance_type = "${var.instance_type}"
 
   subnets        = ["${var.subnets}"]
   vpc_id         = "${var.vpc_id}"
@@ -33,6 +34,7 @@ module "clients" {
   namespace     = "${var.namespace}-client"
   min_instances = "${var.min_agents}"
   max_instances = "${var.max_agents}"
+  instance_type = "${var.instance_type}"
 
   subnets        = ["${var.subnets}"]
   vpc_id         = "${var.vpc_id}"
