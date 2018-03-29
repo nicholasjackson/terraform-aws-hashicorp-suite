@@ -4,6 +4,7 @@ data "template_file" "config_consul" {
 
   vars {
     instances             = "${var.min_instances}"
+    datacenter            = "${var.nomad_datacentre}"
     consul_join_tag_key   = "${var.consul_join_tag_key}"
     consul_join_tag_value = "${var.consul_join_tag_value}"
   }
@@ -14,6 +15,7 @@ data "template_file" "config_nomad" {
 
   vars {
     datacenter = "${var.nomad_datacentre}"
+    region     = "${var.nomad_region}"
     instances  = "${var.min_instances}"
   }
 }

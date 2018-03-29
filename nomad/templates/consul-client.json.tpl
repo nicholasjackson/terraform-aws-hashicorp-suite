@@ -1,5 +1,5 @@
 {
-  "datacenter": "aws",
+  "datacenter": "${datacenter}",
   "bind_addr": "0.0.0.0",
   "advertise_addr": "$PRIVATE_IP",
   "advertise_addr_wan": "$PRIVATE_IP",

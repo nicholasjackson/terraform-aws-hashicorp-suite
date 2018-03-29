@@ -23,7 +23,7 @@ module "nomad" {
 
   consul_enabled        = true
   consul_version        = "1.0.6"
-  consul_join_tag_key   = "AutoJoin"
+  consul_join_tag_key   = "autojoin"
   consul_join_tag_value = "${var.namespace}"
 
   nomad_enabled = true

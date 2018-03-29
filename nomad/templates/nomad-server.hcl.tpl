@@ -1,5 +1,5 @@
 datacenter = "${datacenter}"
-region = "aws"
+region     = "${region}"
 data_dir   = "/mnt/nomad"
 
 bind_addr = "0.0.0.0"
