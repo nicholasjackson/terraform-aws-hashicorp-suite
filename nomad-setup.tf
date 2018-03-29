@@ -19,13 +19,11 @@ module "servers" {
   consul_join_tag_key   = "${var.consul_join_tag_key}"
   consul_join_tag_value = "${var.consul_join_tag_value}"
 
-  nomad_datacentre = "dc1"
+  nomad_datacentre = "${var.nomad_datacentre}"
+  nomad_region     = "${var.nomad_region}"
   nomad_enabled    = true
   nomad_type       = "server"
   nomad_version    = "${var.nomad_version}"
-
-  hashiui_enabled = false
-  hashiui_version = "0.3.6"
 }
 
 module "clients" {
@@ -49,11 +47,9 @@ module "clients" {
   consul_join_tag_key   = "${var.consul_join_tag_key}"
   consul_join_tag_value = "${var.consul_join_tag_value}"
 
-  nomad_datacentre = "dc1"
+  nomad_datacentre = "${var.nomad_datacentre}"
+  nomad_region     = "${var.nomad_region}"
   nomad_enabled    = true
   nomad_type       = "client"
   nomad_version    = "${var.nomad_version}"
-
-  hashiui_enabled = true
-  hashiui_version = "${var.hashiui_version}"
 }

@@ -89,12 +89,3 @@ variable "nomad_enabled" {
 variable "nomad_version" {
   description = "Nomad version to install"
 }
-
-# HashiUI configuration
-variable "hashiui_enabled" {
-  description = "Is HashiUI enabled on this instance"
-}
-
-variable "hashiui_version" {
-  description = "Version number for hashi-ui"
-}

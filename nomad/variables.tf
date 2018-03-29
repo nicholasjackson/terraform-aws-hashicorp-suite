@@ -64,6 +64,11 @@ variable "nomad_datacentre" {
   default     = "dc1"
 }
 
+variable "nomad_region" {
+  description = "Default datacenter for Nomad"
+  default     = "aws"
+}
+
 variable "nomad_enabled" {
   description = "Is nomad enabled on this instance"
 }
@@ -79,13 +84,4 @@ variable "nomad_version" {
 variable "nomad_consul_uri" {
   description = "Location of consul server for bootstrapping"
   default     = "http://localhost:8500"
-}
-
-# HashiUI configuration
-variable "hashiui_enabled" {
-  description = "Is HashiUI enabled on this instance"
-}
-
-variable "hashiui_version" {
-  description = "Version number for hashi-ui"
 }

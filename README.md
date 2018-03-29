@@ -22,14 +22,11 @@ module "nomad" {
   server_target_groups = ["${aws_alb_target_group.nomad.arn}"]
 
   consul_enabled        = true
-  consul_version        = "0.9.3"
+  consul_version        = "1.0.6"
   consul_join_tag_key   = "AutoJoin"
   consul_join_tag_value = "${var.namespace}"
 
   nomad_enabled = true
-  nomad_version = "0.6.3"
-
-  hashiui_enabled = false
-  hashiui_version = "v0.20.1"
+  nomad_version = "0.7.1"
 }
 ```

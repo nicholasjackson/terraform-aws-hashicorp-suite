@@ -80,31 +80,6 @@ EOF
 EOF
 }
 
-function installHashiUI() {
-  echo "Fetching hashi-ui..."
-  cd /tmp
-  curl -sLo hashi-ui \
-    https://github.com/jippi/hashi-ui/releases/download/v${hashiui_version}/hashi-ui-linux-amd64
-  sudo chmod +x hashi-ui
-  sudo mv hashi-ui /usr/local/bin/hashi-ui
-  
-  echo "Installing hashi-ui..."
-  sudo tee /etc/systemd/system/hashi-ui.service > /dev/null <<EOF
-  [Unit]
-  description="Hashi UI"
-  
-  [Service]
-  KillSignal=INT
-  ExecStart=/usr/local/bin/hashi-ui
-  Restart=always
-  RestartSec=5
-  Environment=CONSUL_ENABLE=true
-  Environment=NOMAD_ENABLE=true
-  ExecStopPost=sleep 10
-EOF
-}
-
-
 # Install software
 installDependencies
 
@@ -121,10 +96,6 @@ if [[ ${nomad_enabled} == 1 && ${nomad_type} == "client" ]]; then
   installDocker
 fi
 
-if [[ ${hashiui_enabled} == 1 ]]; then
-  installHashiUI ${hashiui_version}
-fi
-
 
 # Start services
 sudo systemctl daemon-reload
@@ -137,9 +108,4 @@ fi
 if [[ ${nomad_enabled} == 1 ]]; then
   sudo systemctl enable nomad.service
   sudo systemctl start nomad.service
-fi
-
-if [[ ${hashiui_enabled} == 1 ]]; then
-  sudo systemctl enable hashi-ui.service
-  sudo systemctl start hashi-ui.service
 fi

@@ -31,9 +31,6 @@ data "template_file" "startup" {
     nomad_version = "${var.nomad_version}"
     nomad_type    = "${var.nomad_type}"
     nomad_config  = "${data.template_file.config_nomad.rendered}"
-
-    hashiui_enabled = "${var.hashiui_enabled}"
-    hashiui_version = "${var.hashiui_version}"
   }
 }
 
@@ -50,7 +47,7 @@ resource "aws_launch_configuration" "default" {
 }
 
 resource "aws_autoscaling_group" "default" {
-  name     = "${var.namespace}"
+  name     = "${var.namespace}.${var.nomad_type}"
   max_size = "${var.max_instances}"
   min_size = "${var.min_instances}"
 
