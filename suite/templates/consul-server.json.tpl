@@ -13,6 +13,7 @@
   "leave_on_terminate": true,
   "retry_join": ["provider=aws tag_key=${consul_join_tag_key} tag_value=${consul_join_tag_value}"],
   "server": true,
+  "ui": true,
   "raft_protocol": 3,
   "autopilot": {
     "cleanup_dead_servers": true,

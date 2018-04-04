@@ -1,5 +1,5 @@
 module "servers" {
-  source = "./nomad"
+  source = "./suite"
 
   namespace     = "${var.namespace}-server"
   min_instances = "${var.min_servers}"
@@ -24,10 +24,13 @@ module "servers" {
   nomad_enabled    = true
   nomad_type       = "server"
   nomad_version    = "${var.nomad_version}"
+
+  vault_enabled = "${var.vault_enabled}"
+  vault_version = "${var.vault_version}"
 }
 
 module "clients" {
-  source = "./nomad"
+  source = "./suite"
 
   namespace     = "${var.namespace}-client"
   min_instances = "${var.min_agents}"
@@ -52,4 +55,7 @@ module "clients" {
   nomad_enabled    = true
   nomad_type       = "client"
   nomad_version    = "${var.nomad_version}"
+
+  vault_enabled = false
+  vault_version = "${var.vault_version}"
 }

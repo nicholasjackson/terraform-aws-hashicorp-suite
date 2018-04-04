@@ -20,6 +20,16 @@ data "template_file" "config_nomad" {
   }
 }
 
+data "template_file" "config_vault" {
+  template = "${file("${path.module}/templates/vault-server.hcl.tpl")}"
+
+  vars {
+    datacenter = "${var.nomad_datacentre}"
+    region     = "${var.nomad_region}"
+    instances  = "${var.min_instances}"
+  }
+}
+
 data "template_file" "startup" {
   template = "${file("${path.module}/templates/startup.sh.tpl")}"
 
@@ -33,6 +43,10 @@ data "template_file" "startup" {
     nomad_version = "${var.nomad_version}"
     nomad_type    = "${var.nomad_type}"
     nomad_config  = "${data.template_file.config_nomad.rendered}"
+
+    vault_enabled = "${var.vault_enabled}"
+    vault_version = "${var.vault_version}"
+    vault_config  = "${data.template_file.config_vault.rendered}"
   }
 }
 

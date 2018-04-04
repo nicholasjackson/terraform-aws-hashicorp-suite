@@ -89,3 +89,12 @@ variable "nomad_enabled" {
 variable "nomad_version" {
   description = "Nomad version to install"
 }
+
+# Vault settings
+variable "vault_enabled" {
+  description = "Is vault enabled on this instance"
+}
+
+variable "vault_version" {
+  description = "Vault version to install"
+}

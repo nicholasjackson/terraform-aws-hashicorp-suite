@@ -80,6 +80,34 @@ EOF
 EOF
 }
 
+function installVault() {
+  echo "Fetching Vault..."
+  cd /tmp
+  curl -sLo vault.zip https://releases.hashicorp.com/vault/${vault_version}/vault_${vault_version}_linux_amd64.zip
+  
+  echo "Installing Vault..."
+  unzip vault.zip >/dev/null
+  sudo chmod +x vault
+  sudo mv vault /usr/local/bin/vault
+  
+  # Setup Vault
+  sudo mkdir -p /mnt/vault
+  sudo mkdir -p /etc/vault.d
+  sudo tee /etc/vault.d/config.hcl > /dev/null <<EOF
+  ${vault_config}
+EOF
+  
+  sudo tee /etc/systemd/system/vault.service > /dev/null <<"EOF"
+  [Unit]
+  Description = "Vault"
+  
+  [Service]
+  KillSignal=INT
+  ExecStart=/usr/local/bin/vault server -config="/etc/vault.d"
+  Restart=always
+EOF
+}
+
 # Install software
 installDependencies
 
@@ -91,6 +119,9 @@ if [[ ${nomad_enabled} == 1 ]]; then
   installNomad ${nomad_version}
 fi
 
+if [[ ${vault_enabled} == 1 ]]; then
+  installVault ${vault_version}
+fi
 
 if [[ ${nomad_enabled} == 1 && ${nomad_type} == "client" ]]; then
   installDocker
@@ -103,6 +134,11 @@ sudo systemctl daemon-reload
 if [[ ${consul_enabled} == 1 ]]; then
   sudo systemctl enable consul.service
   sudo systemctl start consul.service
+fi
+
+if [[ ${vault_enabled} == 1 ]]; then
+  sudo systemctl enable vault.service
+  sudo systemctl start vault.service
 fi
 
 if [[ ${nomad_enabled} == 1 ]]; then

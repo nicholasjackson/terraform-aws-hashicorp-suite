@@ -85,3 +85,12 @@ variable "nomad_consul_uri" {
   description = "Location of consul server for bootstrapping"
   default     = "http://localhost:8500"
 }
+
+# Vault settings
+variable "vault_enabled" {
+  description = "Is vault enabled on this instance"
+}
+
+variable "vault_version" {
+  description = "Vault version to install"
+}
