@@ -42,6 +42,10 @@ variable "consul_enabled" {
   description = "Should consul be installed onto the instance?"
 }
 
+variable "consul_connect_enabled" {
+  description = "Should consul be installed onto the instance?"
+}
+
 variable "consul_type" {
   description = "Is the consul instance a server or client"
 }

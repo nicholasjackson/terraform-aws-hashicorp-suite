@@ -32,7 +32,7 @@ function installConsul() {
   # Setup Consul
   sudo mkdir -p /mnt/consul
   sudo mkdir -p /etc/consul.d
-  sudo tee /etc/consul.d/config.json > /dev/null <<EOF
+  sudo tee /etc/consul.d/config.hcl > /dev/null <<EOF
   ${consul_config}
 EOF
   

@@ -71,6 +71,10 @@ variable "consul_enabled" {
   description = "Is consul enabled on this instance"
 }
 
+variable "consul_connect_enabled" {
+  description = "Is consul connect enabled on this instance"
+}
+
 # Nomad settings
 variable "nomad_datacentre" {
   description = "Default datacenter for Nomad"

@@ -1,12 +1,13 @@
 # Create the user-data
 data "template_file" "config_consul" {
-  template = "${file("${path.module}/templates/consul-${var.consul_type}.json.tpl")}"
+  template = "${file("${path.module}/templates/consul-${var.consul_type}.hcl.tpl")}"
 
   vars {
-    instances             = "${var.min_instances}"
-    datacenter            = "${var.nomad_datacentre}"
-    consul_join_tag_key   = "${var.consul_join_tag_key}"
-    consul_join_tag_value = "${var.consul_join_tag_value}"
+    instances              = "${var.min_instances}"
+    datacenter             = "${var.nomad_datacentre}"
+    consul_join_tag_key    = "${var.consul_join_tag_key}"
+    consul_join_tag_value  = "${var.consul_join_tag_value}"
+    consul_connect_enalbed = "${var.consul_connect_enabled}"
   }
 }
 

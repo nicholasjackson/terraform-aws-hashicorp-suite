@@ -13,15 +13,16 @@ module "servers" {
 
   target_groups = ["${var.server_target_groups}"]
 
-  consul_enabled        = true
-  consul_type           = "server"
-  consul_version        = "${var.consul_version}"
-  consul_join_tag_key   = "${var.consul_join_tag_key}"
-  consul_join_tag_value = "${var.consul_join_tag_value}"
+  consul_enabled         = "${var.consul_enabled}"
+  consul_connect_enabled = "${var.consul_connect_enabled}"
+  consul_type            = "server"
+  consul_version         = "${var.consul_version}"
+  consul_join_tag_key    = "${var.consul_join_tag_key}"
+  consul_join_tag_value  = "${var.consul_join_tag_value}"
 
   nomad_datacentre = "${var.nomad_datacentre}"
   nomad_region     = "${var.nomad_region}"
-  nomad_enabled    = true
+  nomad_enabled    = "${var.nomad_enabled}"
   nomad_type       = "server"
   nomad_version    = "${var.nomad_version}"
 
@@ -44,11 +45,12 @@ module "clients" {
 
   target_groups = ["${var.client_target_groups}"]
 
-  consul_enabled        = true
-  consul_type           = "client"
-  consul_version        = "${var.consul_version}"
-  consul_join_tag_key   = "${var.consul_join_tag_key}"
-  consul_join_tag_value = "${var.consul_join_tag_value}"
+  consul_enabled         = true
+  consul_connect_enabled = "${var.consul_connect_enabled}"
+  consul_type            = "client"
+  consul_version         = "${var.consul_version}"
+  consul_join_tag_key    = "${var.consul_join_tag_key}"
+  consul_join_tag_value  = "${var.consul_join_tag_value}"
 
   nomad_datacentre = "${var.nomad_datacentre}"
   nomad_region     = "${var.nomad_region}"
